@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import './App.css'
 
 interface Item {
   id: number
@@ -65,42 +64,44 @@ function App() {
   }
 
   return (
-    <div className="container">
-      <h1>Items</h1>
+    <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6 text-center">Items</h1>
 
-      <form onSubmit={handleSubmit} className="form">
-        <h2>Add Item</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-8 bg-gray-100 p-4 rounded-lg">
+        <h2 className="text-xl font-semibold">Add Item</h2>
         <input
           type="text"
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
         <textarea
           placeholder="Description (optional)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
-        <button type="submit">Add</button>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded">Add</button>
       </form>
 
-      {error && <p className="error">{error}</p>}
+      {error && <p className="text-red-500 mb-4">{error}</p>}
 
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <ul className="item-list">
+        <ul className="flex flex-col gap-3">
           {items.length === 0 && <li>No items yet. Add one above!</li>}
           {items.map((item) => (
-            <li key={item.id} className="item-card">
-              <div className="item-info">
-                <strong>{item.name}</strong>
-                {item.description && <p>{item.description}</p>}
-                <small>{new Date(item.created_at).toLocaleString()}</small>
+            <li key={item.id} className="flex justify-between items-center bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+              <div className="flex flex-col gap-1">
+                <strong className="text-lg font-semibold">{item.name}</strong>
+                {item.description && <p className="text-gray-600 text-sm">{item.description}</p>}
+                <small className="text-gray-400 text-xs">{new Date(item.created_at).toLocaleString()}</small>
               </div>
               <button
-                className="delete-btn"
+                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
                 onClick={() => handleDelete(item.id)}
               >
                 Delete
